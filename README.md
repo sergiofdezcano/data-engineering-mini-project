@@ -706,7 +706,7 @@ Created as a demonstration of skills in:
 
 **Contact**:
 - GitHub: [sergiofdezcano](https://github.com/sergiofdezcano)
-- LinkedIn: [Your profile]
+- LinkedIn: 
 - Email: sergiofdezcano@gmail.com
 
 ---

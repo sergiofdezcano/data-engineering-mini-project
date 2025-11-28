@@ -1,79 +1,81 @@
 # Data Engineering Mini Project
 
-> **Un pipeline ETL completo y producción-ready para datos de criptomonedas usando las herramientas más demandadas del Modern Data Stack**
+> **A production-ready ETL pipeline for cryptocurrency market data using the most in-demand Modern Data Stack tools**
 
-Este proyecto demuestra un flujo completo de ingeniería de datos desde la extracción de datos de una API pública, pasando por transformaciones SQL modulares, hasta la generación de tablas analíticas listas para visualización o reportes.
+This project demonstrates a complete data engineering workflow from extracting data from a public API, through modular SQL transformations, to generating analytics-ready tables for visualization or reporting.
 
-## Tabla de Contenidos
+[![Language: Spanish](https://img.shields.io/badge/Idioma-Español-blue)](./README_ES.md)
 
-- [¿Qué hace este proyecto?](#qué-hace-este-proyecto)
-- [Conceptos Demostrados](#conceptos-demostrados)
+## Table of Contents
+
+- [What Does This Project Do?](#what-does-this-project-do)
+- [Demonstrated Concepts](#demonstrated-concepts)
 - [Tech Stack](#tech-stack)
-- [Arquitectura](#arquitectura)
-- [Instalación y Uso](#instalación-y-uso)
-- [Estructura del Proyecto](#estructura-del-proyecto)
-- [Pipeline Detallado](#pipeline-detallado)
-- [Modelos de Datos](#modelos-de-datos)
-- [Monitoreo y Troubleshooting](#monitoreo-y-troubleshooting)
-- [Recursos Adicionales](#recursos-adicionales)
+- [Architecture](#architecture)
+- [Installation and Usage](#installation-and-usage)
+- [Project Structure](#project-structure)
+- [Detailed Pipeline](#detailed-pipeline)
+- [Data Models](#data-models)
+- [Monitoring and Troubleshooting](#monitoring-and-troubleshooting)
+- [Additional Resources](#additional-resources)
 
 ---
 
-## ¿Qué hace este proyecto?
+## What Does This Project Do?
 
-Este proyecto implementa un **pipeline ETL automatizado** que:
+This project implements an **automated ETL pipeline** that:
 
-1. **Extrae** datos del top 50 de criptomonedas desde la API de CoinGecko
-2. **Carga** los datos raw en una base de datos PostgreSQL
-3. **Transforma** los datos usando dbt en capas (staging → marts)
-4. **Valida** la calidad de los datos con tests automáticos
-5. **Documenta** automáticamente el linaje y esquema de datos
-6. **Orquesta** todo el proceso con Apache Airflow cada 6 horas
+1. **Extracts** data from the top 50 cryptocurrencies via CoinGecko API
+2. **Loads** raw data into a PostgreSQL database
+3. **Transforms** the data using dbt in layers (staging → marts)
+4. **Validates** data quality with automated tests
+5. **Documents** data lineage and schema automatically
+6. **Orchestrates** the entire process with Apache Airflow every 6 hours
 
-**Resultado**: Tablas analíticas listas para dashboards o reportes con métricas como volatilidad, categorías de market cap, performance, etc.
+**Result**: Analytics-ready tables for dashboards or reports with metrics like volatility, market cap categories, performance, etc.
 
 ---
 
-## Conceptos Demostrados
+## Demonstrated Concepts
 
-Este proyecto es ideal para portafolio porque demuestra conocimiento en:
+This project is ideal for portfolios because it demonstrates knowledge in:
 
-### Ingeniería de Datos
-- ✅ **ETL Pipeline Design**: Separación clara de Extract, Load, Transform
+### Data Engineering
+- ✅ **ETL Pipeline Design**: Clear separation of Extract, Load, Transform
 - ✅ **Data Modeling**: Medallion Architecture (Raw → Staging → Marts)
-- ✅ **Data Quality**: Tests automáticos con dbt
-- ✅ **Orchestration**: Workflows complejos con Airflow DAGs
-- ✅ **SQL Analytics**: Transformaciones SQL con CTEs, CASE statements, agregaciones
+- ✅ **Data Quality**: Automated tests with dbt
+- ✅ **Orchestration**: Complex workflows with Airflow DAGs
+- ✅ **SQL Analytics**: SQL transformations with CTEs, CASE statements, aggregations
 
-### DevOps & Infraestructura
-- ✅ **Infrastructure as Code**: Docker Compose para todo el stack
+### DevOps & Infrastructure
+- ✅ **Infrastructure as Code**: Docker Compose for the entire stack
 - ✅ **Containerization**: Multi-container orchestration
-- ✅ **Environment Management**: Variables de entorno y configuración
-- ✅ **Reproducibility**: Un solo comando para levantar todo el sistema
+- ✅ **Environment Management**: Environment variables and configuration
+- ✅ **Reproducibility**: Single command to spin up the entire system
 
 ### Best Practices
-- ✅ **Version Control**: Estructura Git-friendly
-- ✅ **Documentation**: README completo + dbt docs automáticos
-- ✅ **Modularity**: Código organizado y reutilizable
-- ✅ **Scalability**: Fácil de extender con nuevas fuentes de datos
-- ✅ **Monitoring**: Logs estructurados y healthchecks
+- ✅ **Version Control**: Git-friendly structure
+- ✅ **Documentation**: Comprehensive README + automatic dbt docs
+- ✅ **Modularity**: Organized and reusable code
+- ✅ **Scalability**: Easy to extend with new data sources
+- ✅ **Monitoring**: Structured logs and healthchecks
 
 ---
 
 ## Tech Stack
 
-| Tecnología | Propósito | ¿Por qué esta herramienta? |
-|------------|-----------|----------------------------|
-| **Apache Airflow** | Orquestación de workflows | El estándar de la industria para scheduling y monitoreo de pipelines de datos. Usado por Airbnb, Twitter, Reddit |
-| **dbt (data build tool)** | Transformaciones SQL | La herramienta #1 para Analytics Engineers. Permite tests, documentación y versionado de transformaciones SQL |
-| **PostgreSQL** | Data Warehouse | Base de datos relacional robusta y open-source. Fácil de escalar a Redshift, BigQuery o Snowflake |
-| **Docker Compose** | Orquestación de contenedores | Permite replicar todo el ambiente de desarrollo/producción en cualquier máquina con un solo comando |
-| **Python 3.11** | Scripting y procesamiento | Lenguaje estándar en Data Engineering. Usado para extracción, procesamiento y orquestación |
-| **CoinGecko API** | Fuente de datos | API pública gratuita con datos reales de mercado. Fácil de reemplazar con otras APIs |
+| Technology | Purpose | Why This Tool? |
+|------------|---------|----------------|
+| **Apache Airflow** | Workflow orchestration | Industry standard for scheduling and monitoring data pipelines. Used by Airbnb, Twitter, Reddit |
+| **dbt (data build tool)** | SQL transformations | The #1 tool for Analytics Engineers. Enables testing, documentation, and version control of SQL transformations |
+| **PostgreSQL** | Data Warehouse | Robust open-source relational database. Easy to scale to Redshift, BigQuery, or Snowflake |
+| **Docker Compose** | Container orchestration | Allows replicating the entire dev/production environment on any machine with a single command |
+| **Python 3.11** | Scripting and processing | Standard language in Data Engineering. Used for extraction, processing, and orchestration |
+| **CoinGecko API** | Data source | Free public API with real market data. Easy to replace with other APIs |
 
-## Arquitectura
+## Architecture
 
-### Diagrama de Arquitectura
+### Architecture Diagram
 
 ```
                     ┌─────────────────────────────────────────┐
@@ -86,15 +88,15 @@ Este proyecto es ideal para portafolio porque demuestra conocimiento en:
 │             │     │  │  │ Webserver│   │  Scheduler │ │  │
 └─────────────┘     │  │  └─────────┘   └────────────┘ │  │
                     │  │                                  │  │
-   (Datos reales    │  │  DAG: crypto_etl_pipeline        │  │
-    de mercado)     │  └────────────┬─────────────────────┘  │
+   (Real market     │  │  DAG: crypto_etl_pipeline        │  │
+     data)          │  └────────────┬─────────────────────┘  │
                     │               │                        │
                     │               ▼                        │
                     │  ┌──────────────────────────────────┐  │
                     │  │       POSTGRESQL                 │  │
                     │  │                                  │  │
                     │  │  Table: raw_crypto_data          │  │
-                    │  │  (Datos sin procesar)            │  │
+                    │  │  (Unprocessed data)              │  │
                     │  └────────────┬─────────────────────┘  │
                     │               │                        │
                     │               ▼                        │
@@ -112,56 +114,56 @@ Este proyecto es ideal para portafolio porque demuestra conocimiento en:
                     │                                         │
                     └─────────────────────────────────────────┘
 
-           Todo corre en tu máquina local con un solo comando
+           Everything runs on your local machine with one command
 ```
 
-### Flujo de Datos Detallado
+### Detailed Data Flow
 
 #### 1️⃣ **EXTRACT** (Python Script)
-- **Archivo**: `scripts/extract_data.py`
-- **Acción**: Hace request GET a la API de CoinGecko
-- **Datos obtenidos**: Top 50 cryptos con precio, market cap, volumen, cambios 24h, etc.
-- **Formato**: JSON almacenado en `data/raw/crypto_data_YYYYMMDD_HHMMSS.json`
-- **Frecuencia**: Cada 6 horas (configurable)
+- **File**: `scripts/extract_data.py`
+- **Action**: Makes GET request to CoinGecko API
+- **Data obtained**: Top 50 cryptos with price, market cap, volume, 24h changes, etc.
+- **Format**: JSON stored in `data/raw/crypto_data_YYYYMMDD_HHMMSS.json`
+- **Frequency**: Every 6 hours (configurable)
 
 #### 2️⃣ **LOAD** (Python + SQLAlchemy)
-- **Archivo**: `scripts/extract_data.py` (función `load_to_postgres`)
-- **Acción**: Lee el JSON y lo carga a PostgreSQL
-- **Tabla destino**: `raw_crypto_data` (schema público)
-- **Estrategia**: Append (se van acumulando registros históricos)
+- **File**: `scripts/extract_data.py` (`load_to_postgres` function)
+- **Action**: Reads JSON and loads to PostgreSQL
+- **Target table**: `raw_crypto_data` (public schema)
+- **Strategy**: Append (historical records accumulate)
 
 #### 3️⃣ **TRANSFORM** (dbt)
 - **Staging**: `stg_crypto_data` (VIEW)
-  - Limpieza de datos (nulls → 0, uppercase symbols)
-  - Renombrado de columnas para claridad
-  - Parsing de timestamps
-  - **Materialización**: VIEW (no consume espacio, siempre actualizado)
+  - Data cleaning (nulls → 0, uppercase symbols)
+  - Column renaming for clarity
+  - Timestamp parsing
+  - **Materialization**: VIEW (no storage, always up-to-date)
 
 - **Marts**: `crypto_market_summary` (TABLE)
-  - Cálculos de métricas analíticas:
-    - Categoría de volatilidad (High/Medium/Low)
-    - Categoría de market cap (Large/Mid/Small)
-    - Indicador de performance (Strong Gain/Gain/Loss/Strong Loss)
-    - Ratio volumen/market cap (indicador de liquidez)
-  - **Materialización**: TABLE (optimizado para queries analíticas)
+  - Analytical metrics calculations:
+    - Volatility category (High/Medium/Low)
+    - Market cap category (Large/Mid/Small)
+    - Performance indicator (Strong Gain/Gain/Loss/Strong Loss)
+    - Volume/market cap ratio (liquidity indicator)
+  - **Materialization**: TABLE (optimized for analytical queries)
 
 #### 4️⃣ **TEST** (dbt tests)
-- Tests de unicidad (crypto_id debe ser único)
-- Tests de NOT NULL (campos críticos no pueden ser nulos)
-- Tests personalizados definidos en `schema.yml`
-- **Resultado**: Pipeline falla si los datos no pasan los tests
+- Uniqueness tests (crypto_id must be unique)
+- NOT NULL tests (critical fields cannot be null)
+- Custom tests defined in `schema.yml`
+- **Result**: Pipeline fails if data doesn't pass tests
 
 #### 5️⃣ **DOCUMENT** (dbt docs)
-- Genera documentación HTML interactiva
-- Muestra lineage (qué tabla depende de qué)
-- Descripción de cada columna
-- Código SQL de cada modelo
+- Generates interactive HTML documentation
+- Shows lineage (which table depends on what)
+- Description of each column
+- SQL code of each model
 
 #### 6️⃣ **ORCHESTRATE** (Airflow DAG)
-- **Archivo**: `airflow/dags/crypto_etl_pipeline.py`
-- **Dependencias**: `extract → load → dbt_run → dbt_test → dbt_docs`
-- **Retry logic**: 2 reintentos con 5 minutos de espera
-- **Alertas**: Configurable por email (actualmente desactivado)
+- **File**: `airflow/dags/crypto_etl_pipeline.py`
+- **Dependencies**: `extract → load → dbt_run → dbt_test → dbt_docs`
+- **Retry logic**: 2 retries with 5-minute wait
+- **Alerts**: Configurable via email (currently disabled)
 
 ---
 
@@ -169,7 +171,8 @@ Este proyecto es ideal para portafolio porque demuestra conocimiento en:
 
 ```
 data-engineering-mini-project/
-├── README.md
+├── README.md                   # This file (English)
+├── README_ES.md                # Spanish version
 ├── docker-compose.yml          # Docker services configuration
 ├── .env.example                # Environment variables template
 ├── .gitignore
@@ -198,105 +201,103 @@ data-engineering-mini-project/
     └── raw/                    # Raw data storage
 ```
 
-## Instalación y Uso
+## Installation and Usage
 
-### Prerrequisitos
+### Prerequisites
 
-Antes de comenzar, asegúrate de tener instalado:
+Before starting, make sure you have installed:
 
-| Software | Versión mínima | Link de descarga |
-|----------|----------------|------------------|
+| Software | Minimum Version | Download Link |
+|----------|----------------|---------------|
 | Docker Desktop | 20.10+ | [docker.com](https://www.docker.com/products/docker-desktop) |
-| Docker Compose | 2.0+ | Incluido en Docker Desktop |
+| Docker Compose | 2.0+ | Included in Docker Desktop |
 | Git | 2.0+ | [git-scm.com](https://git-scm.com/) |
 
-**Recursos de sistema recomendados**:
-- 💾 RAM: Mínimo 4GB disponible para Docker
-- 💿 Disco: ~5GB de espacio libre
-- 🖥️ CPU: 2 cores mínimo
+**Recommended system resources**:
+- 💾 RAM: Minimum 4GB available for Docker
+- 💿 Disk: ~5GB free space
+- 🖥️ CPU: 2 cores minimum
 
 ---
 
-### 🚀 Instalación Paso a Paso
+### 🚀 Step-by-Step Installation
 
-#### **Paso 1: Clonar el repositorio**
+#### **Step 1: Clone the repository**
 
 ```bash
-git clone https://github.com/tu-usuario/data-engineering-mini-project.git
+git clone https://github.com/sergiofdezcano/data-engineering-mini-project.git
 cd data-engineering-mini-project
 ```
 
-#### **Paso 2: Configurar variables de entorno**
+#### **Step 2: Configure environment variables**
 
 ```bash
-# El archivo .env ya está incluido con valores por defecto
-# Si quieres personalizarlo:
-nano .env  # o usa tu editor favorito
+# The .env file is already included with default values
+# If you want to customize it:
+nano .env  # or use your favorite editor
 
-# Contenido del .env:
+# .env contents:
 # POSTGRES_USER=airflow
 # POSTGRES_PASSWORD=airflow
 # POSTGRES_DB=data_warehouse
 ```
 
-> 💡 **Nota**: Para producción, cambia las credenciales por defecto
+> 💡 **Note**: For production, change the default credentials
 
-#### **Paso 3: Levantar los servicios**
+#### **Step 3: Start the services**
 
 ```bash
-# Iniciar todos los contenedores en background
+# Start all containers in background
 docker-compose up -d
 
-# Ver el progreso de inicio
+# View startup progress
 docker-compose logs -f
 
-# Espera ~2 minutos hasta ver: "Airflow webserver is ready"
+# Wait ~2 minutes until you see: "Airflow webserver is ready"
 ```
 
-**Verificar que todo está corriendo**:
+**Verify everything is running**:
 ```bash
 docker-compose ps
 
-# Deberías ver 4 contenedores corriendo:
+# You should see 4 containers running:
 # - de_postgres          (PostgreSQL database)
 # - de_airflow_webserver (Airflow UI)
 # - de_airflow_scheduler (Airflow worker)
-# - de_airflow_init      (Completed - inicialización)
+# - de_airflow_init      (Completed - initialization)
 ```
 
-#### **Paso 4: Acceder a Airflow UI**
+#### **Step 4: Access Airflow UI**
 
-1. Abre tu navegador en: **http://localhost:8080**
-2. Ingresa las credenciales:
+1. Open your browser at: **http://localhost:8080**
+2. Enter credentials:
    ```
-   Usuario: admin
+   Username: admin
    Password: admin
    ```
-3. Verás el dashboard de Airflow con el DAG `crypto_etl_pipeline`
+3. You'll see the Airflow dashboard with the `crypto_etl_pipeline` DAG
 
-![Airflow Dashboard](https://via.placeholder.com/800x400.png?text=Airflow+UI+Dashboard)
+#### **Step 5: Run the pipeline**
 
-#### **Paso 5: Ejecutar el pipeline**
+**Option A: Manual execution (recommended for first time)**
+1. In Airflow UI, locate the `crypto_etl_pipeline` DAG
+2. Activate it using the toggle (OFF → ON)
+3. Click the "▶️ Trigger DAG" button (top right)
+4. Go to "Graph" view to monitor real-time progress
 
-**Opción A: Ejecución manual (recomendado para primera vez)**
-1. En Airflow UI, localiza el DAG `crypto_etl_pipeline`
-2. Actívalo usando el toggle (OFF → ON)
-3. Click en el botón "▶️ Trigger DAG" (arriba a la derecha)
-4. Ve a "Graph" view para monitorear el progreso en tiempo real
+**Option B: Let it run automatically**
+- DAG is configured to run **every 6 hours**
+- First execution: When you activate it
+- Following: 00:00, 06:00, 12:00, 18:00 UTC
 
-**Opción B: Dejar que se ejecute automáticamente**
-- El DAG está configurado para correr **cada 6 horas**
-- Primera ejecución: Cuando lo actives
-- Siguientes: 00:00, 06:00, 12:00, 18:00 UTC
+#### **Step 6: Verify results**
 
-#### **Paso 6: Verificar los resultados**
-
-**Conectarse a la base de datos**:
+**Connect to the database**:
 ```bash
-# Opción 1: Desde la terminal
+# Option 1: From terminal
 docker exec -it de_postgres psql -U airflow -d data_warehouse
 
-# Opción 2: Usar un cliente SQL (DBeaver, pgAdmin, etc.)
+# Option 2: Use a SQL client (DBeaver, pgAdmin, etc.)
 # Host: localhost
 # Port: 5432
 # Database: data_warehouse
@@ -304,19 +305,19 @@ docker exec -it de_postgres psql -U airflow -d data_warehouse
 # Password: airflow
 ```
 
-**Queries de ejemplo**:
+**Example queries**:
 ```sql
--- Ver datos raw
+-- View raw data
 SELECT id, symbol, name, current_price, market_cap_rank
 FROM raw_crypto_data
 LIMIT 10;
 
--- Ver datos transformados (staging)
+-- View transformed data (staging)
 SELECT crypto_id, symbol, crypto_name, current_price
 FROM stg_crypto_data
 LIMIT 10;
 
--- Ver tabla analítica final (marts)
+-- View final analytical table (marts)
 SELECT
     crypto_name,
     symbol,
@@ -328,7 +329,7 @@ FROM marts.crypto_market_summary
 ORDER BY market_cap_rank
 LIMIT 10;
 
--- Top 5 criptos más volátiles
+-- Top 5 most volatile cryptos
 SELECT crypto_name, volatility_24h, price_change_24h_pct
 FROM marts.crypto_market_summary
 WHERE volatility_24h = 'High'
@@ -338,130 +339,116 @@ LIMIT 5;
 
 ---
 
-### 🔄 Comandos Útiles
+### 🔄 Useful Commands
 
 ```bash
-# Ver logs en tiempo real
+# View logs in real-time
 docker-compose logs -f airflow-scheduler
 
-# Reiniciar servicios
+# Restart services
 docker-compose restart
 
-# Detener todo
+# Stop everything
 docker-compose down
 
-# Detener y borrar TODOS los datos (⚠️ cuidado!)
+# Stop and delete ALL data (⚠️ careful!)
 docker-compose down -v
 
-# Ver uso de recursos
+# View resource usage
 docker stats
 
-# Acceder a un contenedor
+# Access a container
 docker exec -it de_airflow_scheduler bash
 ```
 
-### ⏰ Programación del Pipeline
+### ⏰ Pipeline Scheduling
 
-**Configuración actual**: Cron expression `0 */6 * * *`
-- Ejecuta cada 6 horas: 00:00, 06:00, 12:00, 18:00 UTC
-- Configurable en `airflow/dags/crypto_etl_pipeline.py`
+**Current configuration**: Cron expression `0 */6 * * *`
+- Runs every 6 hours: 00:00, 06:00, 12:00, 18:00 UTC
+- Configurable in `airflow/dags/crypto_etl_pipeline.py`
 
-**Otras opciones de schedule**:
+**Other schedule options**:
 ```python
-schedule_interval='@hourly'       # Cada hora
-schedule_interval='@daily'        # Diario a medianoche
-schedule_interval='0 9 * * *'     # Diario a las 9 AM
-schedule_interval='*/30 * * * *'  # Cada 30 minutos
-schedule_interval=None            # Solo manual
+schedule_interval='@hourly'       # Every hour
+schedule_interval='@daily'        # Daily at midnight
+schedule_interval='0 9 * * *'     # Daily at 9 AM
+schedule_interval='*/30 * * * *'  # Every 30 minutes
+schedule_interval=None            # Manual only
 ```
 
 ---
 
-## Modelos de Datos
+## Data Models
 
-Este proyecto sigue la **Medallion Architecture** (Bronze → Silver → Gold), también conocida como arquitectura de capas de datos.
+This project follows the **Medallion Architecture** (Bronze → Silver → Gold), also known as layered data architecture.
 
-### 🥉 Capa RAW (Bronze Layer)
+### 🥉 RAW Layer (Bronze Layer)
 
-**Tabla**: `raw_crypto_data`
-- **Tipo**: Table (PostgreSQL)
+**Table**: `raw_crypto_data`
+- **Type**: Table (PostgreSQL)
 - **Schema**: `public`
-- **Propósito**: Almacenar datos crudos tal como vienen de la API
-- **Estrategia**: Append-only (histórico completo)
+- **Purpose**: Store raw data as it comes from the API
+- **Strategy**: Append-only (complete history)
 
-**Columnas principales**:
+**Main columns**:
 ```sql
-id                     VARCHAR    -- Identificador único (ej: 'bitcoin')
-symbol                 VARCHAR    -- Símbolo (ej: 'btc')
-name                   VARCHAR    -- Nombre completo
-current_price          FLOAT      -- Precio actual en USD
-market_cap             BIGINT     -- Capitalización de mercado
-market_cap_rank        INTEGER    -- Ranking por market cap
-total_volume           BIGINT     -- Volumen de trading 24h
-high_24h               FLOAT      -- Precio máximo 24h
-low_24h                FLOAT      -- Precio mínimo 24h
-price_change_24h       FLOAT      -- Cambio de precio 24h (USD)
-price_change_percentage_24h FLOAT -- Cambio de precio 24h (%)
-circulating_supply     BIGINT     -- Supply en circulación
-total_supply           BIGINT     -- Supply total
-max_supply             BIGINT     -- Supply máximo
+id                     VARCHAR    -- Unique identifier (e.g., 'bitcoin')
+symbol                 VARCHAR    -- Symbol (e.g., 'btc')
+name                   VARCHAR    -- Full name
+current_price          FLOAT      -- Current price in USD
+market_cap             BIGINT     -- Market capitalization
+market_cap_rank        INTEGER    -- Rank by market cap
+total_volume           BIGINT     -- 24h trading volume
+high_24h               FLOAT      -- 24h high price
+low_24h                FLOAT      -- 24h low price
+price_change_24h       FLOAT      -- 24h price change (USD)
+price_change_percentage_24h FLOAT -- 24h price change (%)
+circulating_supply     BIGINT     -- Circulating supply
+total_supply           BIGINT     -- Total supply
+max_supply             BIGINT     -- Maximum supply
 ath                    FLOAT      -- All-time high price
 atl                    FLOAT      -- All-time low price
-last_updated           TIMESTAMP  -- Última actualización de la API
-extracted_at           TIMESTAMP  -- Timestamp de extracción
+last_updated           TIMESTAMP  -- Last API update
+extracted_at           TIMESTAMP  -- Extraction timestamp
 ```
 
 ---
 
-### 🥈 Capa STAGING (Silver Layer)
+### 🥈 STAGING Layer (Silver Layer)
 
-**Modelo**: `stg_crypto_data`
-- **Tipo**: VIEW (se recalcula en cada query)
+**Model**: `stg_crypto_data`
+- **Type**: VIEW (recalculated on each query)
 - **Schema**: `public`
-- **Propósito**: Limpiar y estandarizar datos raw
-- **Archivo**: `dbt/models/staging/stg_crypto_data.sql`
+- **Purpose**: Clean and standardize raw data
+- **File**: `dbt/models/staging/stg_crypto_data.sql`
 
-**Transformaciones aplicadas**:
-- ✅ Renombrado de columnas para mayor claridad (`id` → `crypto_id`)
-- ✅ Conversión de símbolos a UPPERCASE (`btc` → `BTC`)
-- ✅ Manejo de nulls (`COALESCE(fully_diluted_valuation, 0)`)
-- ✅ Casting de timestamps para consistencia
-- ✅ Eliminación de columnas innecesarias
+**Applied transformations**:
+- ✅ Column renaming for clarity (`id` → `crypto_id`)
+- ✅ Symbol conversion to UPPERCASE (`btc` → `BTC`)
+- ✅ Null handling (`COALESCE(fully_diluted_valuation, 0)`)
+- ✅ Timestamp casting for consistency
+- ✅ Removal of unnecessary columns
 
-**Tests aplicados**:
-- `unique`: `crypto_id` debe ser único
-- `not_null`: `crypto_id` y `current_price` no pueden ser null
-
-**SQL de ejemplo**:
-```sql
-SELECT
-    crypto_id,
-    symbol,
-    crypto_name,
-    current_price,
-    market_cap,
-    all_time_high,
-    all_time_low
-FROM stg_crypto_data
-WHERE market_cap_rank <= 10;
-```
+**Applied tests**:
+- `unique`: `crypto_id` must be unique
+- `not_null`: `crypto_id` and `current_price` cannot be null
 
 ---
 
-### 🥇 Capa MARTS (Gold Layer)
+### 🥇 MARTS Layer (Gold Layer)
 
-**Modelo**: `crypto_market_summary`
-- **Tipo**: TABLE (materializada, optimizada para analytics)
+**Model**: `crypto_market_summary`
+- **Type**: TABLE (materialized, optimized for analytics)
 - **Schema**: `marts`
-- **Propósito**: Datos listos para análisis y visualización
-- **Archivo**: `dbt/models/marts/crypto_market_summary.sql`
+- **Purpose**: Analytics-ready data for visualization
+- **File**: `dbt/models/marts/crypto_market_summary.sql`
 
-**Métricas calculadas**:
+**Calculated metrics**:
 
 1. **Volatility Indicator** (`volatility_24h`)
-   - **High**: Cambio de precio > 10%
-   - **Medium**: Cambio de precio entre 5-10%
-   - **Low**: Cambio de precio < 5%
+   - **High**: Price change > 10%
+   - **Medium**: Price change between 5-10%
+   - **Low**: Price change < 5%
 
 2. **Market Cap Category** (`market_cap_category`)
    - **Large Cap**: Market cap > $10B
@@ -469,39 +456,20 @@ WHERE market_cap_rank <= 10;
    - **Small Cap**: Market cap < $1B
 
 3. **Performance Indicator** (`performance_24h`)
-   - **Strong Gain**: +5% o más
-   - **Gain**: 0% a +5%
-   - **Loss**: 0% a -5%
-   - **Strong Loss**: -5% o menos
+   - **Strong Gain**: +5% or more
+   - **Gain**: 0% to +5%
+   - **Loss**: 0% to -5%
+   - **Strong Loss**: -5% or less
 
 4. **Liquidity Ratio** (`volume_to_mcap_ratio`)
-   - Ratio de volumen diario vs market cap
-   - Indica qué tan líquido es el activo
-   - Fórmula: `(total_volume / market_cap) * 100`
+   - Daily volume vs market cap ratio
+   - Indicates how liquid the asset is
+   - Formula: `(total_volume / market_cap) * 100`
 
-**Columnas finales**:
-```sql
-crypto_id                    VARCHAR
-symbol                       VARCHAR
-crypto_name                  VARCHAR
-current_price                FLOAT
-market_cap                   BIGINT
-market_cap_rank              INTEGER
-total_volume                 BIGINT
-price_change_24h_pct         NUMERIC(10,2)
-market_cap_change_24h_pct    NUMERIC(10,2)
-volatility_24h               VARCHAR    -- High/Medium/Low
-market_cap_category          VARCHAR    -- Large/Mid/Small Cap
-performance_24h              VARCHAR    -- Strong Gain/Gain/Loss/Strong Loss
-volume_to_mcap_ratio         NUMERIC(10,2)
-last_updated                 TIMESTAMP
-extracted_at                 TIMESTAMP
-```
-
-**Queries analíticas de ejemplo**:
+**Analytical query examples**:
 
 ```sql
--- Distribución de cryptos por categoría de market cap
+-- Distribution of cryptos by market cap category
 SELECT
     market_cap_category,
     COUNT(*) as count,
@@ -509,7 +477,7 @@ SELECT
 FROM marts.crypto_market_summary
 GROUP BY market_cap_category;
 
--- Top 10 cryptos con mejor performance 24h
+-- Top 10 cryptos with best 24h performance
 SELECT
     crypto_name,
     symbol,
@@ -520,7 +488,7 @@ WHERE performance_24h IN ('Strong Gain', 'Gain')
 ORDER BY price_change_24h_pct DESC
 LIMIT 10;
 
--- Cryptos más líquidas (alto volumen relativo)
+-- Most liquid cryptos (high relative volume)
 SELECT
     crypto_name,
     symbol,
@@ -529,100 +497,27 @@ SELECT
 FROM marts.crypto_market_summary
 WHERE volume_to_mcap_ratio > 10
 ORDER BY volume_to_mcap_ratio DESC;
-
--- Análisis de volatilidad por categoría de market cap
-SELECT
-    market_cap_category,
-    volatility_24h,
-    COUNT(*) as count
-FROM marts.crypto_market_summary
-GROUP BY market_cap_category, volatility_24h
-ORDER BY market_cap_category, volatility_24h;
 ```
 
 ---
 
-### 📊 Lineage de Datos
+### 📊 Data Lineage
 
 ```
 CoinGecko API
      ↓
 raw_crypto_data (Bronze)
      ↓
-stg_crypto_data (Silver) ← Tests de calidad
+stg_crypto_data (Silver) ← Quality tests
      ↓
-crypto_market_summary (Gold) ← Métricas analíticas
+crypto_market_summary (Gold) ← Analytical metrics
      ↓
-Dashboard / BI Tool / Análisis
+Dashboard / BI Tool / Analysis
 ```
 
 ---
 
-## dbt Commands
-
-Run dbt commands inside the Airflow scheduler container:
-
-```bash
-# Access the container
-docker exec -it de_airflow_scheduler bash
-
-# Navigate to dbt directory
-cd /opt/airflow/dbt
-
-# Run all models
-dbt run --profiles-dir .
-
-# Run specific model
-dbt run --select stg_crypto_data --profiles-dir .
-
-# Run tests
-dbt test --profiles-dir .
-
-# Generate documentation
-dbt docs generate --profiles-dir .
-
-# View documentation (requires additional setup)
-dbt docs serve --profiles-dir .
-```
-
-## Database Access
-
-Connect to PostgreSQL directly:
-
-```bash
-# Using Docker
-docker exec -it de_postgres psql -U airflow -d data_warehouse
-
-# Using external client
-Host: localhost
-Port: 5432
-Database: data_warehouse
-User: airflow
-Password: airflow
-```
-
-### Query Examples
-
-```sql
--- View raw data
-SELECT * FROM raw_crypto_data LIMIT 10;
-
--- View staged data
-SELECT * FROM stg_crypto_data LIMIT 10;
-
--- View analytics summary
-SELECT * FROM marts.crypto_market_summary
-ORDER BY market_cap_rank
-LIMIT 10;
-
--- Top gainers in 24h
-SELECT crypto_name, symbol, price_change_24h_pct
-FROM marts.crypto_market_summary
-WHERE performance_24h = 'Strong Gain'
-ORDER BY price_change_24h_pct DESC;
-```
-
-## Monitoring & Troubleshooting
+## Monitoring and Troubleshooting
 
 ### View Logs
 
@@ -666,131 +561,77 @@ docker-compose ps postgres
 docker exec -it de_airflow_scheduler psql -h postgres -U airflow -d data_warehouse
 ```
 
-## Stopping the Project
+---
 
-```bash
-# Stop all services
-docker-compose down
+## 🚀 Extensions and Possible Improvements
 
-# Stop and remove volumes (deletes all data)
-docker-compose down -v
-```
+This project is a perfect template to extend. Here are some ideas:
 
-## Extending the Project
-
-### Add More Data Sources
-1. Create new extraction script in `scripts/`
-2. Add task to DAG in `airflow/dags/`
-3. Create corresponding dbt models
-
-### Add More Transformations
-1. Create new SQL models in `dbt/models/`
-2. Add tests in `schema.yml`
-3. Run `dbt run` to materialize
-
-### Schedule Changes
-Edit `schedule_interval` in `crypto_etl_pipeline.py`:
+### 1. **Add more data sources**
 ```python
-schedule_interval='0 */6 * * *',  # Every 6 hours
-# Other examples:
-# '@daily'           - Once per day
-# '@hourly'          - Once per hour
-# '0 9 * * *'        - Daily at 9 AM
-```
-
-## 🚀 Extensiones y Mejoras Posibles
-
-Este proyecto es un template perfecto para extender. Aquí algunas ideas:
-
-### 1. **Agregar más fuentes de datos**
-```python
-# Ejemplo: Agregar datos de noticias de cryptos
+# Example: Add crypto news data
 def extract_news_data():
     url = "https://newsapi.org/v2/everything?q=cryptocurrency"
-    # ... similar a extract_crypto_data
+    # ... similar to extract_crypto_data
 ```
 
-### 2. **Implementar alertas**
+### 2. **Implement alerts**
 ```python
-# En el DAG de Airflow
+# In Airflow DAG
 from airflow.operators.email import EmailOperator
 
 email_alert = EmailOperator(
     task_id='send_alert',
-    to='tu-email@example.com',
-    subject='ETL Pipeline Completado',
-    html_content='Pipeline ejecutado exitosamente'
+    to='your-email@example.com',
+    subject='ETL Pipeline Completed',
+    html_content='Pipeline executed successfully'
 )
 ```
 
-### 3. **Agregar incremental loading en dbt**
+### 3. **Add incremental loading in dbt**
 ```sql
--- En dbt, usar incremental materializations
+-- In dbt, use incremental materializations
 {{ config(materialized='incremental', unique_key='crypto_id') }}
 ```
 
-### 4. **Conectar con un dashboard**
-- **Metabase**: Open-source, fácil de usar
-- **Apache Superset**: Potente y escalable
-- **Grafana**: Para métricas en tiempo real
+### 4. **Connect to a dashboard**
+- **Metabase**: Open-source, easy to use
+- **Apache Superset**: Powerful and scalable
+- **Grafana**: For real-time metrics
 - **Power BI / Tableau**: Enterprise solutions
 
-### 5. **Agregar más tests de dbt**
-```yaml
-# En schema.yml
-- name: current_price
-  tests:
-    - not_null
-    - dbt_utils.expression_is_true:
-        expression: "> 0"
-```
-
-### 6. **Implementar CI/CD**
-```yaml
-# .github/workflows/ci.yml
-name: CI
-on: [push]
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Run dbt tests
-        run: dbt test
-```
-
-### 7. **Migrar a la nube**
+### 5. **Migrate to cloud**
 - **AWS**: Airflow → MWAA, PostgreSQL → RDS/Redshift
 - **GCP**: Airflow → Composer, PostgreSQL → BigQuery
 - **Azure**: Airflow → Data Factory, PostgreSQL → Synapse
 
 ---
 
-## 📚 Recursos de Aprendizaje
+## 📚 Learning Resources
 
-### Documentación Oficial
-- [Apache Airflow Docs](https://airflow.apache.org/docs/) - Orquestación de workflows
-- [dbt Documentation](https://docs.getdbt.com/) - Transformaciones SQL
-- [CoinGecko API](https://www.coingecko.com/en/api/documentation) - Fuente de datos
-- [PostgreSQL Docs](https://www.postgresql.org/docs/) - Base de datos
+### Official Documentation
+- [Apache Airflow Docs](https://airflow.apache.org/docs/) - Workflow orchestration
+- [dbt Documentation](https://docs.getdbt.com/) - SQL transformations
+- [CoinGecko API](https://www.coingecko.com/en/api/documentation) - Data source
+- [PostgreSQL Docs](https://www.postgresql.org/docs/) - Database
 
-### Tutoriales Recomendados
+### Recommended Tutorials
 - [Airflow Tutorial](https://airflow.apache.org/docs/apache-airflow/stable/tutorial.html)
-- [dbt Learn](https://courses.getdbt.com/collections) - Curso gratuito oficial
-- [Modern Data Stack](https://www.moderndatastack.xyz/) - Herramientas del ecosistema
+- [dbt Learn](https://courses.getdbt.com/collections) - Free official course
+- [Modern Data Stack](https://www.moderndatastack.xyz/) - Ecosystem tools
 
-### Comunidades
+### Communities
 - [dbt Slack Community](https://www.getdbt.com/community/) - 50K+ data practitioners
 - [r/dataengineering](https://reddit.com/r/dataengineering) - Reddit community
 - [Data Engineering Weekly](https://www.dataengineeringweekly.com/) - Newsletter
 
 ---
 
-## 🎯 Casos de Uso
+## 🎯 Use Cases
 
-Este proyecto puede adaptarse para múltiples industrias:
+This project can be adapted for multiple industries:
 
-1. **Finanzas**: Stock prices, forex rates, financial indicators
+1. **Finance**: Stock prices, forex rates, financial indicators
 2. **E-commerce**: Product prices, inventory levels, sales metrics
 3. **Marketing**: Campaign metrics, social media stats, web analytics
 4. **IoT**: Sensor data, device telemetry, time series data
@@ -798,53 +639,41 @@ Este proyecto puede adaptarse para múltiples industrias:
 
 ---
 
-## 🤝 Contribuciones
+## 📝 Technical Notes
 
-Este es un proyecto de portfolio, pero las mejoras son bienvenidas:
+### Why These Architecture Decisions
 
-1. Fork el repositorio
-2. Crea una branch (`git checkout -b feature/mejora`)
-3. Commit tus cambios (`git commit -m 'Agregar nueva feature'`)
-4. Push a la branch (`git push origin feature/mejora`)
-5. Abre un Pull Request
+**Why Airflow and not just cron jobs?**
+- UI for visual monitoring
+- Dependency management between tasks
+- Automatic retry logic
+- Centralized logging
+- Scalable to multiple workers
 
----
-
-## 📝 Notas Técnicas
-
-### Por qué estas decisiones de arquitectura
-
-**¿Por qué Airflow y no solo cron jobs?**
-- UI para monitoreo visual
-- Manejo de dependencias entre tareas
-- Retry logic automático
-- Logging centralizado
-- Escalable a múltiples workers
-
-**¿Por qué dbt y no solo SQL scripts?**
-- Versionado de transformaciones
-- Tests automáticos de calidad de datos
-- Documentación autogenerada
+**Why dbt and not just SQL scripts?**
+- Version control of transformations
+- Automatic data quality tests
+- Auto-generated documentation
 - Lineage tracking
-- Macros y reutilización de código
+- Macros and code reusability
 
-**¿Por qué PostgreSQL y no un data warehouse cloud?**
-- Gratis y open-source
-- Fácil de correr localmente
-- Fácil de migrar a Redshift, BigQuery, Snowflake
-- Bueno para aprender fundamentos
+**Why PostgreSQL and not a cloud data warehouse?**
+- Free and open-source
+- Easy to run locally
+- Easy to migrate to Redshift, BigQuery, Snowflake
+- Good for learning fundamentals
 
-**¿Por qué Docker Compose y no Kubernetes?**
-- Más simple para desarrollo local
-- No requiere cluster
-- Suficiente para proyectos pequeños/medianos
-- Fácil de entender para principiantes
+**Why Docker Compose and not Kubernetes?**
+- Simpler for local development
+- Doesn't require a cluster
+- Sufficient for small/medium projects
+- Easy to understand for beginners
 
 ---
 
-## 📄 Licencia
+## 📄 License
 
-Este proyecto está bajo la licencia MIT. Eres libre de usar, modificar y distribuir este código.
+This project is under the MIT license. You are free to use, modify, and distribute this code.
 
 ```
 MIT License
@@ -864,39 +693,39 @@ copies or substantial portions of the Software.
 
 ---
 
-## ✨ Autor
+## ✨ Author
 
-**Proyecto de Portfolio - Data Engineering**
+**Portfolio Project - Data Engineering**
 
-Creado como demostración de habilidades en:
+Created as a demonstration of skills in:
 - 📊 Data Engineering
 - 🔄 ETL Pipeline Design
 - 🐳 DevOps & Containerization
 - 📈 Analytics Engineering
 - 🛠️ Modern Data Stack
 
-**Contacto**:
-- GitHub: [Tu perfil]
-- LinkedIn: [Tu perfil]
-- Email: [Tu email]
+**Contact**:
+- GitHub: [sergiofdezcano](https://github.com/sergiofdezcano)
+- LinkedIn: [Your profile]
+- Email: sergiofdezcano@gmail.com
 
 ---
 
-## 🙏 Agradecimientos
+## 🙏 Acknowledgments
 
-- CoinGecko por proporcionar una API gratuita y confiable
-- Comunidad de Apache Airflow
-- Comunidad de dbt
-- Todos los que contribuyen al Modern Data Stack open-source
-
----
-
-## ⭐ Star History
-
-Si este proyecto te fue útil, considera darle una estrella en GitHub!
+- CoinGecko for providing a free and reliable API
+- Apache Airflow community
+- dbt community
+- All contributors to the open-source Modern Data Stack
 
 ---
 
-**¿Preguntas o problemas?** Abre un issue en GitHub o contacta directamente.
+## ⭐ Star This Project
 
-**Última actualización**: Enero 2025
+If this project was useful to you, consider giving it a star on GitHub!
+
+---
+
+**Questions or issues?** Open an issue on GitHub or contact directly.
+
+**Last updated**: January 2025

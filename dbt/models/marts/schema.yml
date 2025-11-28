@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: crypto_market_summary
+    description: Analytical summary of cryptocurrency market with categorization and metrics
+    columns:
+      - name: crypto_id
+        description: Unique identifier for the cryptocurrency
+        tests:
+          - unique
+          - not_null
+      - name: symbol
+        description: Cryptocurrency symbol
+      - name: crypto_name
+        description: Full name of the cryptocurrency
+      - name: current_price
+        description: Current price in USD
+      - name: market_cap
+        description: Total market capitalization
+      - name: market_cap_rank
+        description: Rank by market capitalization
+      - name: volatility_24h
+        description: Volatility category based on 24h price change (High/Medium/Low)
+      - name: market_cap_category
+        description: Market cap category (Large Cap/Mid Cap/Small Cap)
+      - name: performance_24h
+        description: Performance indicator for 24h period
+      - name: volume_to_mcap_ratio
+        description: Trading volume to market cap ratio (liquidity indicator)

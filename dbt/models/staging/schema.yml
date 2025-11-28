@@ -1,0 +1,41 @@
+version: 2
+
+sources:
+  - name: raw
+    description: Raw cryptocurrency data from CoinGecko API
+    database: data_warehouse
+    schema: public
+    tables:
+      - name: raw_crypto_data
+        description: Raw crypto market data
+        columns:
+          - name: id
+            description: Unique identifier for the cryptocurrency
+            tests:
+              - not_null
+          - name: symbol
+            description: Cryptocurrency symbol (e.g., BTC, ETH)
+          - name: name
+            description: Full name of the cryptocurrency
+          - name: current_price
+            description: Current price in USD
+
+models:
+  - name: stg_crypto_data
+    description: Staged and cleaned cryptocurrency data
+    columns:
+      - name: crypto_id
+        description: Unique identifier for the cryptocurrency
+        tests:
+          - unique
+          - not_null
+      - name: symbol
+        description: Uppercase cryptocurrency symbol
+      - name: crypto_name
+        description: Full name of the cryptocurrency
+      - name: current_price
+        description: Current price in USD
+        tests:
+          - not_null
+      - name: market_cap_rank
+        description: Rank by market capitalization
